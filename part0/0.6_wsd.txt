@@ -1,0 +1,8 @@
+title 0.6 New note
+
+note over browser: new note is added to notes list and page is rerendered
+browser->server: HTTP POST https://studies.cs.helsinki.fi/exampleapp/new_note_spa
+
+server-->browser: status code 201
+
+

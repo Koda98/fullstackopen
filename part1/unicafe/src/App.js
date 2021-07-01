@@ -13,6 +13,13 @@ const Button = ({ handleClick, text }) => (
 
 // Statistics component
 const Statistics = ({ num_bad, num_neutral, num_good, total}) => {
+    if (total <= 0) {
+        return(
+            <div>
+                No feedback given
+            </div>
+        )
+    }
     const calcAvg = (num_bad, num_good, total) => (
         (-1*num_bad + num_good) / total
     )

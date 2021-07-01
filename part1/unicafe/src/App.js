@@ -1,9 +1,5 @@
 import React, { useState } from 'react'
 
-// Display component
-const Display = ({ text, counter }) => <div>{text} {counter}</div>
-const DisplayPerc = ({ text, counter }) => <div>{text} {counter} %</div>
-
 // Button component
 const Button = ({ handleClick, text }) => (
     <button onClick={handleClick}>
@@ -11,7 +7,10 @@ const Button = ({ handleClick, text }) => (
     </button>
 )
 
-// Statistics component
+// Statistic component (for a single statistic)
+const Statistic = ({ text, value}) => <div>{text} {value}</div>
+
+// Statistics component (for all statistics)
 const Statistics = ({ num_bad, num_neutral, num_good, total}) => {
     if (total <= 0) {
         return(
@@ -20,21 +19,18 @@ const Statistics = ({ num_bad, num_neutral, num_good, total}) => {
             </div>
         )
     }
-    const calcAvg = (num_bad, num_good, total) => (
-        (-1*num_bad + num_good) / total
-    )
+    const calcAvg = () => (-1*num_bad + num_good) / total
 
-    const calcPercPos = (num_good, total) => (num_good / total) * 100
+    const calcPercPos = () => ((num_good / total) * 100) + " %"
+
     return (
         <div>
-            <div>good {num_good}</div>
-            <div>neutral {num_neutral}</div>
-            <div>bad {num_bad}</div>
-            <div>all {total}</div>
-            <div>
-                average {calcAvg(num_bad, num_good, total)}
-            </div>
-            <div>positive {calcPercPos(num_good, total)} %</div>
+            <Statistic text="good" value={num_good} />
+            <Statistic text="neutral" value={num_neutral} />
+            <Statistic text="bad" value={num_bad} />
+            <Statistic text="all" value={total} />
+            <Statistic text="average" value={calcAvg()} />
+            <Statistic text="positive" value={calcPercPos()} />
         </div>
     )
 }

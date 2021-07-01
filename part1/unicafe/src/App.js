@@ -8,7 +8,12 @@ const Button = ({ handleClick, text }) => (
 )
 
 // Statistic component (for a single statistic)
-const Statistic = ({ text, value}) => <div>{text} {value}</div>
+const Statistic = ({ text, value}) => (
+    <tr>
+        <td>{text}</td>
+        <td>{value}</td>
+    </tr>
+)
 
 // Statistics component (for all statistics)
 const Statistics = ({ num_bad, num_neutral, num_good, total}) => {
@@ -25,12 +30,18 @@ const Statistics = ({ num_bad, num_neutral, num_good, total}) => {
 
     return (
         <div>
-            <Statistic text="good" value={num_good} />
-            <Statistic text="neutral" value={num_neutral} />
-            <Statistic text="bad" value={num_bad} />
-            <Statistic text="all" value={total} />
-            <Statistic text="average" value={calcAvg()} />
-            <Statistic text="positive" value={calcPercPos()} />
+            <table>
+                <tbody>
+                    <Statistic text="good" value={num_good} />
+                    <Statistic text="neutral" value={num_neutral} />
+                    <Statistic text="bad" value={num_bad} />
+                    <Statistic text="all" value={total} />
+                    <Statistic text="average" value={calcAvg()} />
+                    <Statistic text="positive" value={calcPercPos()} />
+                </tbody>
+
+            </table>
+
         </div>
     )
 }

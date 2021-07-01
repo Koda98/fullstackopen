@@ -11,30 +11,46 @@ const Button = ({ handleClick, text }) => (
     </button>
 )
 
-const calcAvg = function(num_bad, num_neutral, num_good){
-    let sum = -1*num_bad + num_good
-    return sum/(num_bad + num_neutral + num_good)
-}
+// Statistics component
+const Statistics = ({ num_bad, num_neutral, num_good, total}) => {
+    const calcAvg = (num_bad, num_good, total) => (
+        (-1*num_bad + num_good) / total
+    )
 
-const calcPos = (num_good, total) => (num_good / total) * 100
+    const calcPercPos = (num_good, total) => (num_good / total) * 100
+    return (
+        <div>
+            <div>good {num_good}</div>
+            <div>neutral {num_neutral}</div>
+            <div>bad {num_bad}</div>
+            <div>all {total}</div>
+            <div>
+                average {calcAvg(num_bad, num_good, total)}
+            </div>
+            <div>positive {calcPercPos(num_good, total)} %</div>
+        </div>
+    )
+}
 
 const App = () => {
     // save clicks of each button to its own state
     const [good, setGood] = useState(0)
     const [neutral, setNeutral] = useState(0)
     const [bad, setBad] = useState(0)
+    const [total, setTotal] = useState(0)
 
     // Event handlers
-    const handleGoodClick = () => setGood(good + 1)
-    const handleNeutralClick = () => setNeutral(neutral + 1)
-    const handleBadClick = () => setBad(bad + 1)
-
-    let total = good + neutral + bad
-    let avg = 0
-    let perc_pos = 0
-    if (total > 0) {
-        avg = calcAvg(bad, neutral, good)
-        perc_pos = calcPos(good, total)
+    const handleGoodClick = () => {
+        setGood(good + 1)
+        setTotal(total + 1)
+    }
+    const handleNeutralClick = () => {
+        setNeutral(neutral + 1)
+        setTotal(total + 1)
+    }
+    const handleBadClick = () => {
+        setBad(bad + 1)
+        setTotal(total + 1)
     }
 
     return (
@@ -54,12 +70,13 @@ const App = () => {
             />
 
             <h1>statistics</h1>
-            <Display text="good" counter={good}/>
-            <Display text="neutral" counter={neutral}/>
-            <Display text="bad" counter={bad}/>
-            <Display text="all" counter={total}/>
-            <Display text="average" counter={avg}/>
-            <DisplayPerc text="positive" counter={perc_pos}/>
+            <Statistics 
+                num_bad={bad}
+                num_neutral={neutral}
+                num_good={good}
+                total={total}
+            />
+
         </div>
     )
 }

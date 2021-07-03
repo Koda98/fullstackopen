@@ -28,11 +28,9 @@ const Weather = ({ city }) => {
     return (
         <div>
             <div>
-                {console.log("temperature log:", weather.temperature)}
                 <b>temperature: </b> {weather.temperature} F
             </div>
             <div>
-                {console.log("weather icon:", weather.weather_icons)}
                 <img src={weather.weather_icons} alt={"weather icon"} />
             </div>
             <div>

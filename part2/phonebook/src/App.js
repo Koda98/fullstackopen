@@ -39,40 +39,55 @@ const App = () => {
     }
 
     const handleAddName = (event) => {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         setNewName(event.target.value)
     }
 
     const handleAddNumber = (event) => {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         setNewNumber(event.target.value)
     }
 
     const handleFilter = (event) => {
-        console.log(event.target.value)
+        // console.log(event.target.value)
         setFilter(event.target.value)
     }
 
-    const personsToShow = persons.filter(person =>
-        person.name.toUpperCase().includes(filter.toUpperCase())
-    )
+    const deletePerson = person => {
+        if (window.confirm(`Delete ${person.name} ?`)) {
+            phonebookService
+            .deletePerson(person.id)
+            .then(response => {
+                setPersons(persons.filter(p => p.id !== person.id))
+                console.log(`Deleted ${person.name} with id ${person.id}`)
+            })
+        }
+    }
 
-    return (
-        <div>
-            <h2>Phonebook</h2>
-            <Filter eventHandler={handleFilter} />
 
-            <h3>add a new</h3>
-            <PersonForm
-                addPerson={addPerson}
-                handleAddName={handleAddName}
-                handleAddNumber={handleAddNumber}
-            />
+const personsToShow = persons.filter(person =>
+    person.name.toUpperCase().includes(filter.toUpperCase())
+)
 
-            <h3>Numbers</h3>
-            <Persons persons_array={personsToShow} />
-        </div>
-    )
+return (
+    <div>
+        <h2>Phonebook</h2>
+        <Filter eventHandler={handleFilter} />
+
+        <h3>add a new</h3>
+        <PersonForm
+            addPerson={addPerson}
+            handleAddName={handleAddName}
+            handleAddNumber={handleAddNumber}
+        />
+
+        <h3>Numbers</h3>
+        <Persons 
+            persons_array={personsToShow}
+            deletePerson={deletePerson}
+        />
+    </div>
+)
 }
 
 export default App

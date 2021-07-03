@@ -27,7 +27,13 @@ const Country = ({ country }) => (
     </div>
 )
 
-const Countries = ({ countries }) => {
+const Button = ({ handleClick, text }) => (
+    <button onClick={handleClick}>
+        {text}
+    </button>
+)
+
+const Countries = ({ countries, setQuery }) => {
     if (countries.length > 10) {
         return (
             <div>
@@ -43,10 +49,17 @@ const Countries = ({ countries }) => {
             />
         )
     }
+
     return (
         <div>
             {countries.map(country =>
-                <div key={country.name}>{country.name}</div>
+                <div key={country.name}>
+                    {country.name}
+                    <Button 
+                        handleClick={() => setQuery(country.name)} 
+                        text="show"
+                    />
+                </div>
             )}
         </div>
     )
@@ -78,7 +91,7 @@ function App() {
     return (
         <div>
             <Query eventHandler={handleQuery} />
-            <Countries countries={countriesToShow} />
+            <Countries countries={countriesToShow} setQuery={setQuery} />
         </div>
     );
 }

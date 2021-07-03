@@ -1,48 +1,26 @@
-import React, { useState } from 'react'
-
-const Filter = ({ eventHandler }) => (
-    <div>
-        filter shown with <input onChange={eventHandler} />
-    </div>
-)
-
-const PersonForm = ({ addPerson, handleAddName, handleAddNumber }) => (
-    <form onSubmit={addPerson}>
-        <div>
-            name: <input onChange={handleAddName} />
-        </div>
-        <div>
-            number: <input onChange={handleAddNumber} />
-        </div>
-        <div>
-            <button type="submit">add</button>
-        </div>
-    </form>
-)
-
-const Person = ({ person }) => (<div>{person.name} {person.number}</div>)
-
-const Persons = ({ persons_array }) => (
-    <div>
-        {persons_array.map(person =>
-            <Person
-                key={person.name}
-                person={person}
-            />
-        )}
-    </div>
-)
+import React, { useEffect, useState } from 'react'
+import axios from 'axios'
+import Filter from './components/Filter'
+import PersonForm from './components/PersonForm'
+import Persons from './components/Persons'
 
 const App = () => {
-    const [persons, setPersons] = useState([
-        { name: 'Arto Hellas', number: '040-123456' },
-        { name: 'Ada Lovelace', number: '39-44-5323523' },
-        { name: 'Dan Abramov', number: '12-43-234345' },
-        { name: 'Mary Poppendieck', number: '39-23-6423122' }
-    ])
+    const [persons, setPersons] = useState([])
     const [newName, setNewName] = useState('')
     const [newNumber, setNewNumber] = useState('')
     const [filter, setFilter] = useState('')
+
+    const hook = () => {
+        console.log("Effect")
+        axios
+            .get("http://localhost:3001/persons")
+            .then(response => {
+                console.log("Promise fulfilled")
+                setPersons(response.data)
+            })
+    }
+
+    useEffect(hook, [])
 
     const addPerson = (event) => {
         event.preventDefault()

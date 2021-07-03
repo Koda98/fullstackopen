@@ -1,7 +1,7 @@
 import React from "react"
 
 const PersonForm = ({ addPerson, handleAddName, handleAddNumber }) => (
-    <form onSubmit={addPerson}>
+    <form id="FORM" onSubmit={addPerson}>
         <div>
             name: <input onChange={handleAddName} />
         </div>
@@ -12,6 +12,7 @@ const PersonForm = ({ addPerson, handleAddName, handleAddNumber }) => (
             <button type="submit">add</button>
         </div>
     </form>
+    
 )
 
 export default PersonForm

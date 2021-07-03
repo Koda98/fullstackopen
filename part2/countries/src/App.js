@@ -7,6 +7,42 @@ const Query = ({ eventHandler }) => (
     </div>
 )
 
+const Weather = ({ city }) => {
+    const [weather, setWeather] = useState({})
+
+    useEffect(() => {
+        const params = {
+            access_key: process.env.REACT_APP_API_KEY,
+            query: city,
+            units: "f"
+        }
+        console.log("Weather Effect")
+        axios
+            .get('http://api.weatherstack.com/current', {params})
+            .then(response => {
+                console.log("Weather promise fulfilled:", response.data.current)
+                setWeather(response.data.current)
+            })
+    }, [city])
+
+    return (
+        <div>
+            <div>
+                {console.log("temperature log:", weather.temperature)}
+                <b>temperature: </b> {weather.temperature} F
+            </div>
+            <div>
+                {console.log("weather icon:", weather.weather_icons)}
+                <img src={weather.weather_icons} alt={"weather icon"} />
+            </div>
+            <div>
+                <b>wind: </b> {weather.wind_speed} direction {weather.wind_dir}
+            </div>
+        </div>
+    )
+
+}
+
 const Country = ({ country }) => (
     <div>
         <h1>{country.name}</h1>
@@ -19,11 +55,15 @@ const Country = ({ country }) => (
                 <li key={language.name}>{language.name}</li>
             )}
         </ul>
-        <img 
+        <img
             src={country.flag}
             alt={`flag of ${country.name}`}
             width="100"
-            />
+        />
+
+        <h2>Weather in {country.name}</h2>
+        <Weather city={country.capital} />
+
     </div>
 )
 
@@ -43,9 +83,9 @@ const Countries = ({ countries, setQuery }) => {
     }
     else if (countries.length === 1) {
         return (
-            <Country 
+            <Country
                 key={countries[0]}
-                country={countries[0]} 
+                country={countries[0]}
             />
         )
     }
@@ -55,8 +95,8 @@ const Countries = ({ countries, setQuery }) => {
             {countries.map(country =>
                 <div key={country.name}>
                     {country.name}
-                    <Button 
-                        handleClick={() => setQuery(country.name)} 
+                    <Button
+                        handleClick={() => setQuery(country.name)}
                         text="show"
                     />
                 </div>
@@ -65,16 +105,16 @@ const Countries = ({ countries, setQuery }) => {
     )
 }
 
-function App() {
+const App = () => {
     const [query, setQuery] = useState('')
     const [countries, setCountries] = useState([])
 
     useEffect(() => {
-        console.log("Effect")
+        console.log("Country Effect")
         axios
             .get("https://restcountries.eu/rest/v2/all")
             .then(response => {
-                console.log("Promise fulfilled")
+                console.log("Country promise fulfilled:", response.data)
                 setCountries(response.data)
             })
     }, [])

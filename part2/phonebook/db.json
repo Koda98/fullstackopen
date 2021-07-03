@@ -1,11 +1,6 @@
 {
   "persons": [
     {
-      "name": "ada lovelace",
-      "number": "234-567-8901",
-      "id": 7
-    },
-    {
       "name": "alan turing",
       "number": "444-444-4444",
       "id": 9
@@ -14,16 +9,6 @@
       "name": "Patrick Tantalo",
       "number": "222-222-2222",
       "id": 11
-    },
-    {
-      "name": "Tracy Larrabee",
-      "number": "890-567-1234",
-      "id": 12
-    },
-    {
-      "name": "Lise Getoor",
-      "number": "321-654-0987",
-      "id": 13
     }
   ]
 }

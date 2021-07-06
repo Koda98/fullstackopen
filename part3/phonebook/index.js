@@ -4,9 +4,8 @@ const morgan = require('morgan')
 const app = express()
 
 app.use(express.json())
-// app.use(morgan(':method :url :status :res[content-length] - :response-time ms'))
+
 app.use(morgan((tokens, request, response) => {
-  // console.log("status", tokens.status(request, response))
   let data = ''
   if (tokens.method(request, response) === 'POST') {
     data = JSON.stringify(request.body)

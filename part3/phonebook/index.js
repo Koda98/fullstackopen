@@ -1,3 +1,4 @@
+const { response } = require('express')
 const express = require('express')
 const app = express()
 
@@ -62,9 +63,40 @@ app.delete('/api/persons/:id', (request, response) => {
   response.status(204).end()
 })
 
-// const generateID = () => {
-//   const maxID = notes.length
-// }
+const generateID = () => {
+  const maxID = Number.MAX_SAFE_INTEGER
+  do {
+    newID = Math.floor(Math.random() * maxID)
+  } while (persons.find(p => p.id === newID))
+
+  return newID
+}
+
+app.post('/api/persons', (request, response) => {
+  const body = request.body
+
+  if (!body.name) {
+    return response.status(400).json({
+      error: 'name missing'
+    })
+  }
+
+  if (!body.number) {
+    return response.status(400).json({
+      error: 'number missing'
+    })
+  }
+
+  const person = {
+    id: generateID(),
+    name: body.name,
+    number: body.number,
+  }
+
+  persons = persons.concat(person)
+
+  response.json(person)
+})
 
 const PORT = 3001
 app.listen(PORT, () => {

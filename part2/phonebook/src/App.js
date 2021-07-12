@@ -44,15 +44,21 @@ const App = () => {
                         console.log(`Updated ${person.name}`)
                     })
                     .catch(error => {
-                        setNotificationMessage(
-                            `Information of ${person.name} has alredy been removed from the server`
-                        )
+                        setNotificationMessage(error.response.data.error)
                         setNotificationError(true)
                         setTimeout(() => {
                             setNotificationMessage(null)
                             setNotificationError(null)
                         }, 5000)
-                        setPersons(persons.filter(p => p.id !== person.id))
+                        // setNotificationMessage(
+                        //     `Information of ${person.name} has alredy been removed from the server`
+                        // )
+                        // setNotificationError(true)
+                        // setTimeout(() => {
+                        //     setNotificationMessage(null)
+                        //     setNotificationError(null)
+                        // }, 5000)
+                        // setPersons(persons.filter(p => p.id !== person.id))
                     })
             }
         }
@@ -70,6 +76,15 @@ const App = () => {
                     setNewName('')
                     setNewNumber('')
                     console.log(`Added ${newName}`)
+                })
+                .catch(error => {
+                    // console.log(error.response.data.error)
+                    setNotificationMessage(error.response.data.error)
+                    setNotificationError(true)
+                    setTimeout(() => {
+                        setNotificationMessage(null)
+                        setNotificationError(null)
+                    }, 5000)
                 })
         }
         document.getElementById("FORM").reset()

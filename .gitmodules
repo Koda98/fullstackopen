@@ -1,3 +1,6 @@
 [submodule "part3/phonebook"]
 	path = part3/phonebook
 	url = git@github.com:Koda98/phonebook.git
+[submodule "part4/blog"]
+	path = part4/blog
+	url = git@github.com:Koda98/blog.git
